@@ -27,7 +27,7 @@ public class isRiding extends AppCompatActivity implements SensorEventListener {
 
     private boolean lightStatus;
     private String fileName;
-    boolean mulaiSensor = false;
+    public boolean mulaiSensor = false;
 
     private float tmpX;
     private float tmpY;
@@ -69,65 +69,19 @@ public class isRiding extends AppCompatActivity implements SensorEventListener {
 
     }
 
-    @Override
     public void onSensorChanged(SensorEvent event) {
         // TODO Auto-generated method stub
-
-        File sdCard = Environment.getExternalStorageDirectory();
-        //File dir = new File (sdCard.getAbsolutePath() + "");
-        //dir.mkdirs();
-        //File file = new File(dir, "filename");
-
-        //FileOutputStream f = new FileOutputStream(file);
-
-        CSVWriter writer = null;
 
         if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
             light = event.values[0];
 
             String txt = "Light : " + light;
 
-            lightT.setText(Html.fromHtml(txt));
-
-            if (light < 22.93) {
-                lightStatus = true;
+            if (light < 25) {
+                mulaiSensor = true;
             } else {
-                lightStatus = false;
-            }
-
-        }
-
-        if(mulaiSensor == true) {
-            if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-
-                float xVal = event.values[0];
-                float yVal = event.values[1];
-                float zVal = event.values[2];
-
-                sx = "X Value : <font color = '#800080'> " + xVal + "</font>";
-                sy = "Y Value : <font color = '#800080'> " + yVal + "</font>";
-                sz = "Z Value : <font color = '#800080'> " + zVal + "</font>";
-
-                x.setText(Html.fromHtml(sx));
-                y.setText(Html.fromHtml(sy));
-                z.setText(Html.fromHtml(sz));
-                String coba = xVal+"#"+yVal+"#"+zVal+"#"+light;
-
-                if((Math.abs(xVal-tmpX)>0.5 || Math.abs(yVal-tmpY)>0.5 || Math.abs(zVal-tmpZ)>0.5) && light < 25) {
-                    try {
-                        writer = new CSVWriter(new FileWriter(sdCard.getAbsolutePath() + "/" + fileName + ".csv", true), ',');
-                        String[] entries = coba.split("#"); // array of your values
-                        writer.writeNext(entries);
-                        writer.close();
-                        tmpX = xVal;
-                        tmpY = yVal;
-                        tmpZ = zVal;
-                    } catch (IOException e) {
-                        //error
-                    }
-                }
+                mulaiSensor = false;
             }
         }
-
     }
 }

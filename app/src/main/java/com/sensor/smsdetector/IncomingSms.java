@@ -47,17 +47,24 @@ public class IncomingSms extends BroadcastReceiver {
 
                     //Sending SMS back
                     String phoneNo = senderNum;
-                    String messageSend = "Maaf Sayang, Bebeb masih naik motor";
-                    try {
-                        SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(phoneNo, null, messageSend, null, null);
-                        Toast.makeText(context, "SMS sent.", Toast.LENGTH_LONG).show();
-                    }
-                    catch (Exception e) {
-                        Toast.makeText(context, "SMS faild, please try again.", Toast.LENGTH_LONG).show();
-                        e.printStackTrace();
-                    }
+                    String messageSend = "Percobaan auto reply : Maaf sedang di jalan";
 
+                    //Check is Riding or no
+//                    isRiding status = new isRiding();
+//                    boolean statusKirim = status.mulaiSensor;
+
+//                    if (statusKirim==true)
+//                    {
+                        try {
+                            SmsManager smsManager = SmsManager.getDefault();
+                            smsManager.sendTextMessage(phoneNo, null, messageSend, null, null);
+                            Toast.makeText(context, "SMS sent.", Toast.LENGTH_LONG).show();
+                        }
+                        catch (Exception e) {
+                            Toast.makeText(context, "SMS faild, please try again.", Toast.LENGTH_LONG).show();
+                            e.printStackTrace();
+                        }
+//                    }
                 } // end for loop
             } // bundle is null
 
